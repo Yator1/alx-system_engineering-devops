@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "obase=A;BINARY"|bc
+echo "$((2#BINARY))"
