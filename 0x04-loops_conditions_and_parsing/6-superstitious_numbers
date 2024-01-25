@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#This script displays number 1-20
+#After displaying 4, 9 and 17 it displays bad luck from
+#china, japan and italy respectively
+
+counter=1
+
+while (($counter <= 20)); do
+    case $counter in
+        4)
+            echo "$counter"
+	    echo "bad luck from China"
+            ;;
+        9)
+            echo "$counter"
+	    echo "bad luck from Japan"
+            ;;
+        17)
+            echo "$counter"
+	    echo "bad luck from Italy"
+            ;;
+        *)
+            echo $counter
+            ;;
+    esac
+
+    ((counter++))
+done
