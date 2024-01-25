@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+#This script loops from 1 to 10 iterations and displays:
+# - 'bad luck' in the 4th iteration
+# - 'good luck' in the 8 iteration 
+# - and 'Best School' for the rest
+
+counter=0
+while ((counter<10)); do
+	if ((counter == 3)); then
+		echo 'bad luck'
+	elif ((counter == 7)); then
+		echo 'good luck'
+	else
+		echo 'Best School'
+	fi
+	((counter++))
+done
