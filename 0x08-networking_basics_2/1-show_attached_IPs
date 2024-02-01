@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# A bash script that displays all active IPv4 IPs
+
+interfaces=$(ip -o link show | awk -F': ' '{print $2}')
+
+for interface in $interfaces; do
+	ips=$(ip -4 addr show dev "$interface" | awk '/inet / {split($2, a, "/"); print a[1]}')
+	
+	if [[ -n "$ips" ]]; then
+		echo "$ips"
+	fi
+done
