@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Bash script that display listening ports
+
+# printf "Proto Recv-Q Send-Q Local Address	    Foreign Address	    State	PID/Program name\n"
+netstat -tulpn | grep LISTEN
