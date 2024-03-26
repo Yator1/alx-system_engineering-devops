@@ -12,14 +12,9 @@ sudo sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-availabl
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Setting up /redirect_me to a youtube video
-location_path="/redirect_me"
-redirection_url="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+redirect_url="https://www.youtube.com/watch?v=QH2-TGUlwu4"
 
 # Insert the redirection configuration into the Nginx configuration file
-sudo sed -i "/server_name _;/a \\
-	location $location_path { \\
-	\trewrite ^ $redirection_url permanent; \\
-	}\n" /etc/nginx/sites-available/default
-
+sudo sed -i '/server_name _;/a \	rewrite ^/redirect_me $redirect_url permanent;' /etc/nginx/sites-available/default
 # Restart nginx
 sudo service nginx restart
