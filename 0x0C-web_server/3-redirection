@@ -12,8 +12,14 @@ sudo sed -i 's/listen 80;/listen 80 default_server;/g' /etc/nginx/sites-availabl
 echo "Hello World!" | sudo tee /var/www/html/index.html
 
 # Setting up /redirect_me to github
-redirecting_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/Yator1 permanent;"
-sudo sed -i "s/server_name _;/$redirecting_string/" /etc/nginx/sites-enabled/default
+location_path="/redirect_me"
+redirection_url="https://www.youtube.com/watch?v=QH2-TGUlwu4"
+
+# Combine location path and redirection URL
+rewrite_config="rewrite ^$location_path\$ $redirection_url permanent;"
+
+# Insert the redirection configuration into the Nginx configuration file
+sudo sed -i "/server_name _;/a \\\t$rewrite_config" /etc/nginx/sites-available/default
 
 # Restart nginx
 sudo service nginx restart
