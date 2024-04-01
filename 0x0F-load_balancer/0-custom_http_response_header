@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Configure web-02 to be identical to web-01 with custom header (HTTP response)
+
+# The custom header and configuration file
+custom_header="add_header X-Served-By \$hostname;"
+nginx_config_file="/etc/nginx/sites-available/default"
+
+# Installing Nginx if not installed
+if ! dpkg -l | grep -q nginx; then
+   sudo apt-get update
+   sudo apt-get install -y nginx  
+fi
+
+# Enabling custom header in configuration file
+if ! grep -q "$custom_header" "$nginx_config_file"; then
+   sudo sed -i "/server {/a \ \ \ \ $custom_header" "$nginx_config_file"
+   sudo systemctl restart nginx
+   echo "Nginx configured with custom header."
+else
+   echo "Nginx is already configured with the custom header."
+fi
