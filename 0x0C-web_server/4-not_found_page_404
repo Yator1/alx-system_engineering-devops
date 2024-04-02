@@ -22,18 +22,7 @@ sudo sed -i "/server_name _;/a \\
 	}\n" /etc/nginx/sites-available/default
 
 # Set up a 404 page
-echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
-new_string="\
-	listen 80 default_server;\n\
-	\terror_page 404 \/404.html;\n\
-	\tlocation = \/404.html {\n\
-	\t\troot \/var\/www\/html;\n\
-	\t\tinternal;\n\t}"
-
-sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
-
-# Testing configurations for syntax errors
-sudo nginx -t
-
-# restart nginx after implementing changes
+echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
+sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+# Restart nginx
 sudo service nginx restart
