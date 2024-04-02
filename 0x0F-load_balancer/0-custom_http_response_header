@@ -1,21 +1,28 @@
 #!/usr/bin/env bash
-# Configure web-02 to be identical to web-01 with custom header (HTTP response)
+# Customizing a 404-error_page
 
-# The custom header and configuration file
-custom_header="add_header X-Served-By \$hostname;"
-nginx_config_file="/etc/nginx/sites-available/default"
+# Updating Packages before performing installations
+sudo apt-get update
+sudo apt-get install -y nginx
 
-# Installing Nginx if not installed
-if ! dpkg -l | grep -q nginx; then
-   sudo apt-get update
-   sudo apt-get install -y nginx  
-fi
+# Creating an index.html page
+echo "Hello World!" | sudo tee /var/www/html/index.html
 
-# Enabling custom header in configuration file
-if ! grep -q "$custom_header" "$nginx_config_file"; then
-   sudo sed -i "/server {/a \ \ \ \ $custom_header" "$nginx_config_file"
-   sudo systemctl restart nginx
-   echo "Nginx configured with custom header."
-else
-   echo "Nginx is already configured with the custom header."
-fi
+# Performing a "moved permanently redirection" (301)
+new_string="server_name _;\n\trewrite ^\/redirect_me https:\/\/github.com\/besthor permanent;"
+sudo sed -i "s/server_name _;/$new_string/" /etc/nginx/sites-enabled/default
+
+# Creating a 404 Custom error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
+new_string="listen 80 default_server;\n\terror_page 404 \/404.html;\n\tlocation = \/404.html {\n\t\troot \/var\/www\/html;\n\t\tinternal;\n\t}"
+
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+
+# Creating an HTTP response header
+sudo sed -i "/server_name _/a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-enabled/default
+
+# Testing configurations for syntax errors
+sudo nginx -t
+
+# Restart nginx after implementing changes
+sudo service nginx restart
