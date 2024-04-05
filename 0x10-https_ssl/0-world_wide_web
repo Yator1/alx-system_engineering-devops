@@ -1,19 +1,27 @@
 #!/usr/bin/env bash
 # A Bash script that will display information about subdomains.
 
-domain_information() {
-    local domain="$1"
-    local subdomain="$2"
-    local line
-    line=$(dig "$subdomain"."$domain" | awk '/ANSWER SECTION:/ {getline; print; getline; print}')
-    echo "$subdomain $line" | awk '{printf "The subdomain %s is a %s record and points to %s\n", $1, $2, $3}'
-}
+function Display_domain_info() {
+    subdomains=("www" "lb-01" "web-01" "web-02")
 
-if [ "$#" -eq 1 ]; then
-    domain_information "$1" "www"
-    domain_information "$1" "lb-01"
-    domain_information "$1" "web-01"
-    domain_information "$1" "web-02"
-elif [ "$#" -eq 2 ]; then
-    domain_information "$1" "$2"
+    if [ $# -eq 1 ]; then
+        for subdomain in "${subdomains[@]}"; do
+            record_type="$(dig $subdomain.$1 | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ' | awk '{print $1}')"
+            destination="$(dig +short $subdomain.$1)"
+            echo "The subdomain $subdomain is a $record_type record and points to $destination"
+        done
+    elif [ $# -eq 2 ]; then
+        record_type="$(dig $2.$1 | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ' | awk '{print $1}')"
+        destination="$(dig +short $2.$1)"
+        echo "The subdomain $2 is a $record_type record and points to $destination"
+    else
+        echo "Usage: ./0-world_wide_web {Domain} {Subdomain}"
+    fi
+}
+if [ $# -eq 1 ]; then
+    Display_domain_info "$1"
+elif [ $# -eq 2 ]; then
+    Display_domain_info "$1" "$2"
+else
+    Display_domain_info
 fi
