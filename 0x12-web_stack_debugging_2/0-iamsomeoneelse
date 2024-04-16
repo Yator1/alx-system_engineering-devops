@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Creates and runs whoami command as specified user
+
+if [ $# -ne 1 ]; then
+	echo "Usage: ./0-iamsomeoneelse <username>"
+	exit 1
+fi
+
+sudo -u "$1" whoami
