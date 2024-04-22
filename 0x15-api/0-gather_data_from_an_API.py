@@ -47,8 +47,8 @@ def get_todo(employee_id):
     for task in completed:
         print("\t {}".format(task["title"]))
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     if len(sys.argv) != 2:
         print("Usage: python script.py EMPLOYEE_ID")
         sys.exit(1)
