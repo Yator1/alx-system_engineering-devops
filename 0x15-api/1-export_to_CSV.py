@@ -6,9 +6,9 @@ For a given employee ID, it returns information about their TODO list
 Adding line in order to export data in CSV format
 """
 
+import csv
 import requests
 import sys
-import csv
 
 
 def get_todo(employee_id):
