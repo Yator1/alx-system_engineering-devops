@@ -55,8 +55,9 @@ if __name__ == '__main__':
 
     try:
         employee_id = int(sys.argv[1])
+        get_todo(employee_id)
     except ValueError:
         print("Please provide a valid integer employee ID")
         sys.exit(1)
 
-    get_todo(employee_id)
+    # get_todo(employee_id)
