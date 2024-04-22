@@ -10,6 +10,8 @@ import sys
 
 
 def get_todo(employee_id):
+    
+
     """
     Returns TODO list for an Employee.
     :param employee_id: The employee's ID.
@@ -48,6 +50,8 @@ def get_todo(employee_id):
         print("\t {}".format(task["title"]))
 
 if __name__ == '__main__':
+
+
     if len(sys.argv) != 2:
         print("Usage: python script.py EMPLOYEE_ID")
         sys.exit(1)
