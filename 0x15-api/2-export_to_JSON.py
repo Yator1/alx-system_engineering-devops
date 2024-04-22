@@ -7,7 +7,7 @@ Adding line in order to export data in CSV format
 Improving the code to export the data in json format
 """
 
-import csv 
+import csv
 import json
 import requests
 import sys
