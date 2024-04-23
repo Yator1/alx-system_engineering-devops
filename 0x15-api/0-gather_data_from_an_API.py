@@ -3,28 +3,61 @@
 """
 A python script that uses REST API.
 For a given employee ID, it returns information about their TODO list
+Adding line in order to export data in CSV format
+Improving the code to export the data in json format
 """
 
 import requests
 import sys
 
 
-if __name__ == "__main__":
+def get_todo(employee_id):
+    """
+    Returns TODO list for an Employee.
+    :param employee_id: The employee's ID.
+    """
+
     base_url = 'https://jsonplaceholder.typicode.com'
 
-    employee_ID = sys.argv[1]
-    user_response = requests.get(base_url + "/users/{}".format(employee_ID))
-    user = user_response.json()
-    params = {"userID": employee_ID}
-    todos_response = requests.get(base_url + "/todos", params=params)
-    todos = todos_response.json()
-    completed = []
+    employee_resp = requests.get(f"{base_url}/users/{employee_id}")
+    if employee_resp.status_code == 200:
+        employee_data = employee_resp.json()
+        employee_name = employee_data["name"]
+    else:
+        return
 
-    for todo in todos:
-        if todo.get("completed") is True:
-            completed.append(todo.get("title"))
-    print("Employee {} is done with tasks({}/{})".format(user.get("name"),
-                                                         len(completed), len(todos)))
+    todo_resp = requests.get(f"{base_url}/todos?userId={employee_id}")
 
-    for complete in completed:
-        print("\t {}".format(complete))
+    if todo_resp.status_code == 200:
+        todo_data = todo_resp.json()
+    else:
+        return
+
+    total_tasks = len(todo_data)
+    completed_tasks = sum(1 for task in todo_data if task["completed"])
+
+    print("Employee {} is done with tasks({}/{}):".format(
+        employee_name,
+        completed_tasks,
+        total_tasks)
+        )
+    
+    completed= []
+    for task in todo_data:
+        if task["completed"]:
+            completed.append(task)
+    for task in completed:
+        print("\t {}".format(task["title"]))
+
+
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print("Usage: python script.py EMPLOYEE_ID")
+        sys.exit(1)
+
+    try:
+        employee_id = int(sys.argv[1])
+        get_todo(employee_id)
+    except ValueError:
+        print("Please provide a valid integer employee ID")
+        sys.exit(1)
