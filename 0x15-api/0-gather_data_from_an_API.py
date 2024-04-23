@@ -41,8 +41,8 @@ def get_todo(employee_id):
         completed_tasks,
         total_tasks)
         )
-    
-    completed= []
+
+    completed = []
     for task in todo_data:
         if task["completed"]:
             completed.append(task)
