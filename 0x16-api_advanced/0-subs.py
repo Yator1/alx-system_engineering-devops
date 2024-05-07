@@ -12,9 +12,9 @@ def number_of_subscribers(subreddit):
     """Querries the API and returns total subscribers for a given subreddit,
        or 0 if invalid subreddit given.
     """
-    headers = {"User-agent": "TitoRedditBot"}
+    headers = {"User-Agent": "TitoRedditBot"}
     url = f"https://www.reddit.com/r/{subreddit}/about.json"
-    
+
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
