@@ -1,4 +1,3 @@
-
 #!/usr/bin/python3
 """
 A module that querries the Reddit API and returns a list of the titles of all hot posts
