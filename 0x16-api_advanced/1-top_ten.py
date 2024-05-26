@@ -4,8 +4,9 @@ This module contains querries the Reddit API and prints the titles of the
 first 10 hot posts listed for a given subreddit
 """
 
-import sys
+
 import requests
+import sys
 
 
 def top_ten(subreddit):
