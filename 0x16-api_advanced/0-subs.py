@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """
-A module that Querries Reddit API and returns the total number of subscribers for a
-given subreddit.
+A module that Querries Reddit API and returns the total number of subscribers 
+for a given subreddit.
 If an invalid subreddit is given, return 0.
 """
 
@@ -19,3 +19,4 @@ def number_of_subscribers(subreddit):
         return subscribers
     else:
         return 0
+    
