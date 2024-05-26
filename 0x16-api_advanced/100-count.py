@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-""" 
+"""
 Module for a function that queries the Reddit API recursively.
 """
 
