@@ -1,14 +1,15 @@
+#!/usr/bin/env bash
+
+
+sudo apt-get update
 # Installing UFW if not installed
 sudo apt install ufw
 
-# 2. Check if IPv6 is enabled(if not change IPV6=yes)
-sudo nano /etc/default/ufw
-
-# 3. Setting the default UFW incoming policy to deny(blocking all incoming traffic)
+# Setting the default UFW incoming policy to deny(blocking all incoming traffic)
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 
-# 4. Allowing ssh, https and http connection respectively
+# Allowing ssh, https and http connection respectively
 sudo ufw allow 22
 sudo ufw allow 443
 sudo ufw allow 80
