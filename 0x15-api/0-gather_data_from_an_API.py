@@ -52,7 +52,7 @@ def get_todo(employee_id):
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
-        print("Usage: python script.py EMPLOYEE_ID")
+        print("Usage: python3 script.py EMPLOYEE_ID")
         sys.exit(1)
 
     try:
