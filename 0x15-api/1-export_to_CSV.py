@@ -33,9 +33,6 @@ def get_todo(employee_id):
     else:
         return
 
-    total_tasks = len(todo_data)
-    completed_tasks = sum(1 for task in todo_data if task["completed"])
-
     csv_file = f"{employee_id}.csv"
     with open(csv_file, mode='w', newline='') as file:
         csv_writer = csv.writer(file, quoting=csv.QUOTE_ALL)
