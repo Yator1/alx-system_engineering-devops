@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+# Creating a backup data
 # Check if a password is provided
 if [ -z "$1" ]; then
   echo "Usage: $0 <mysql_root_password>"
